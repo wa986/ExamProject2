@@ -8,6 +8,7 @@ public class Weapon {
     public Weapon(String name, int damage, int cost) {
         this.name = name;
         this.damage = damage;
+    }
         String
     }
 }
