@@ -5,13 +5,12 @@ public abstract class Weapon {
     private int damage;
     private int cost = 0;
 
-    public Weapon(String name, int damage, int cost) {
+    public Weapon(String name, int damage) {
         this.name = name;
         this.damage = damage;
     }
-    public String  attackMessage(){
+    public abstract String  attackMessage();
 
-    }
     public String getName() {
         return name;
     }
