@@ -44,6 +44,10 @@ public abstract class Character implements Creature {
         return this.weapon;
     }
 
+    public void setWeapon(Weapon weapon) {
+        this.weapon = weapon;
+    }
+
     public String die(){
         return this.name + "は死んでしまった！";
     }
