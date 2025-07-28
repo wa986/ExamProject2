@@ -6,34 +6,38 @@ import weapon.Weapon;
 
 public class Wizard extends Character {
     private int mp;
-    private int hp;
+
     public Wizard(String name, int hp, Weapon weapon, int mp) {
-        super(name, hp,weapon);
+        super(name, hp, weapon);
         this.mp = mp;
     }
 
-    public void magic(Creature target) {
-        //自分のmpをweapon.cost減らす
-        mp =getWeapon().getCost();
+    @Override
+    public void attack(Creature target) {
+        Weapon weapon = getWeapon();
+        int damage = 3;
+        target.setHp(target.getHp() - damage);
+        System.out.println(getName() + "は石を投げた！" + target.getName() + "に" + damage + "のダメージを与えた！");
+    }
 
-        //自分のmpが0の場合「MPが足りない！」と表示し、処理を中断する
-        if (mp <= 0) {
-            System.out.println(getName() + "はMPが足りない！");
-            //対象 (target) のhpをweapon.damage減らす
-            hp = target.getHp() - getWeapon().getDamage();
-            //表示内容をattackMessage()で受け取る
-            getWeapon().attackMessage();
-        } else {
-            System.out.println(getName() + "は火の玉を放った！" + target.getName() + "に3のダメージを与えた！");
-            target.setHp(target.getHp() - 3);
-            this.setMp(this.getMp() - 1);
+    public void magic(Creature target) {
+        Weapon weapon = getWeapon();
+        int cost = weapon.getCost();
+        int damage = weapon.getDamage();
+
+        if (mp < cost) {
+            System.out.println(getName() + "はMPが足りず魔法が使えなかった！");
+            return;
         }
+
+        target.setHp(target.getHp() - damage);
+        mp -= cost;
+        System.out.println(getName() + "は" + weapon.getName() + weapon.attackMessage() +
+                target.getName() + "に" + damage + "の魔法ダメージを与えた！（MP - " + cost + "）");
     }
-    public void attack(Creature target){
-        target.setHp(target.getHp() - 3);
-    }
+
     public void showStatus() {
-        System.out.println(getName() + "HP:" + hp + "/ MP:" + mp);
+        System.out.println(getName() + " HP:" + getHp() + " / MP:" + mp);
     }
 
     public int getMp() {
@@ -41,10 +45,6 @@ public class Wizard extends Character {
     }
 
     public void setMp(int mp) {
-        if (mp < 0) {
-            this.mp = 0;
-        } else {
-            this.mp = mp;
-        }
+        this.mp = Math.max(mp, 0);
     }
 }

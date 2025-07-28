@@ -10,9 +10,12 @@ public class Hero extends Character {
         super(name, hp, weapon);
     }
 
+    @Override
     public void attack(Creature target) {
-        int damage = getWeapon().getDamage();
+        Weapon weapon = getWeapon();
+        int damage = weapon.getDamage();
         target.setHp(target.getHp() - damage);
-        System.out.println(this.getName() + "は" + this.getWeapon().getName() + getWeapon().attackMessage() + target.getName() + "に" + damage + "のダメージを与えた！");
+        System.out.println(getName() + "は" + weapon.getName() + weapon.attackMessage() +
+                target.getName() + "に" + damage + "のダメージを与えた！");
     }
 }
